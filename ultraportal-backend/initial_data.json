@@ -1,0 +1,80 @@
+[
+  {
+    "model": "portal.sitecontent",
+    "pk": 1,
+    "fields": {
+      "slug": "hero",
+      "title": "ULTRAPORTAL",
+      "subtitle": "Aprenda a decimar o inferno com estilo!",
+      "description": "",
+      "content": {}
+    }
+  },
+  {
+    "model": "portal.sitecontent",
+    "pk": 2,
+    "fields": {
+      "slug": "about",
+      "title": "Mas sobre o que é o jogo?",
+      "subtitle": "ULTRAKILL é um jogo de ação FPS que mistura velocidade, estilo e violência em um gameplay frenético.",
+      "description": "ULTRAKILL é um jogo de ação FPS old school criado por Arsi 'Hakita' Patala e distribuído pela New Blood Interactive.",
+      "content": {}
+    }
+  },
+  {
+    "model": "portal.sitecontent",
+    "pk": 3,
+    "fields": {
+      "slug": "strategies",
+      "title": "Principais Estratégias",
+      "subtitle": "",
+      "description": "",
+      "content": [
+        { "title": "Moedas" },
+        { "title": "Movimentação" },
+        { "title": "Outras" }
+      ]
+    }
+  },
+  {
+    "model": "portal.sitecontent",
+    "pk": 4,
+    "fields": {
+      "slug": "speedrun",
+      "title": "Recordes atuais de speedruns",
+      "subtitle": "Speedrun.com",
+      "description": "A plataforma speedrun.com reúne jogadores que compartilham e competem por recordes em ULTRAKILL.",
+      "content": {}
+    }
+  },
+  {
+    "model": "portal.sitecontent",
+    "pk": 5,
+    "fields": {
+      "slug": "demo",
+      "title": "Gostou do jogo? Experimente a demo!",
+      "subtitle": "",
+      "description": "",
+      "content": {
+        "label": ">>> devilmayquake.com <<<",
+        "link": "https://devilmayquake.com/"
+      }
+    }
+  },
+  {
+    "model": "portal.sitecontent",
+    "pk": 6,
+    "fields": {
+      "slug": "footer",
+      "title": "ULTRAPORTAL",
+      "subtitle": "",
+      "description": "Este projeto é feito de fã para fã e é totalmente sem fins lucrativos.",
+      "content": {
+        "phone": "+55 (47) 99210-8335",
+        "email": "paulocesarifc@gmail.com",
+        "github": "https://github.com/PauloK3tchup/ultraportal.git",
+        "instagram": "https://www.instagram.com/paulok3tchup/"
+      }
+    }
+  }
+]
