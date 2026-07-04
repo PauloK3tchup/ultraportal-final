@@ -6,7 +6,7 @@
 
 ## 1. Introdução
 
-Breve descrição do projeto, objetivos e tecnologias utilizadas.
+O presente documento técnico descreve o reaproveitamento do projeto ULTRAPORTAL, desenvolvido como um simples experimento de VueJS. O objetivo do projeto foi adaptar o código existente para que a antiga página estática usasse um banco de dados Django para armazenar e exibir os dados de forma dinâmica. Além disso, o projeto foi implantado em um cluster Kubernetes, utilizando o ArgoCD para gerenciar o GitOps e facilitar o processo de deploy da aplicação.
 
 ## 2. Escolha do Ambiente
 
