@@ -1,5 +1,5 @@
 aws_region       = "us-east-1"
-project_name     = "fundamentos-devops"
+project_name     = "ultraportal"
 ami_id           = "ami-091138d0f0d41ff90"
 instance_type    = "t3.micro"
 key_name         = "vockey"
