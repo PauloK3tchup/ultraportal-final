@@ -1,5 +1,10 @@
 <script setup>
+import { computed } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { useSiteContent } from '@/composables/useSiteContent'
+
+const { siteContent } = useSiteContent()
+const footer = computed(() => siteContent.value.footer || {})
 </script>
 
 <template>
@@ -7,17 +12,28 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
     <div class="footer">
       <div class="footer-content">
         <div class="footer-section about">
-          <h1 class="logo-text">ULTRAPORTAL</h1>
-          <p>Este projeto é feito de fã para fã e é totalmente sem fins lucrativos.</p>
+          <h1 class="logo-text">{{ footer.title || 'ULTRAPORTAL' }}</h1>
+          <p>
+            {{
+              footer.description ||
+              'Este projeto é feito de fã para fã e é totalmente sem fins lucrativos.'
+            }}
+          </p>
           <div class="contact">
-            <span><FontAwesomeIcon icon="fa-phone" /> &nbsp; +55 (47) 99210-8335</span>
-            <span><FontAwesomeIcon icon="fa-envelope" /> &nbsp; paulocesarifc@gmail.com</span>
+            <span
+              ><FontAwesomeIcon icon="fa-phone" /> &nbsp;
+              {{ footer.content?.phone || '+55 (47) 99210-8335' }}</span
+            >
+            <span
+              ><FontAwesomeIcon icon="fa-envelope" /> &nbsp;
+              {{ footer.content?.email || 'paulocesarifc@gmail.com' }}</span
+            >
           </div>
           <div class="socials">
-            <a href="https://github.com/PauloK3tchup/ultraportal.git"
+            <a :href="footer.content?.github || 'https://github.com/PauloK3tchup/ultraportal.git'"
               ><FontAwesomeIcon icon="fa-brands fa-github"
             /></a>
-            <a href="https://www.instagram.com/paulok3tchup/"
+            <a :href="footer.content?.instagram || 'https://www.instagram.com/paulok3tchup/'"
               ><FontAwesomeIcon icon="fa-brands fa-instagram"
             /></a>
           </div>

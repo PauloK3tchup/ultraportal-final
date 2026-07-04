@@ -1,9 +1,17 @@
+<script setup>
+import { computed } from 'vue'
+import { useSiteContent } from '@/composables/useSiteContent'
+
+const { siteContent } = useSiteContent()
+const demo = computed(() => siteContent.value.demo || {})
+</script>
+
 <template>
   <div class="jogo">
-    <h1 v-motion-slide-visible-bottom>Gostou do jogo? Experimente a demo!</h1>
-    <a v-motion-slide-visible-bottom href="https://devilmayquake.com/"
-      >&#x3e;&#x3e;&#x3e; devilmayquake.com &#x3c;&#x3c;&#x3c;</a
-    >
+    <h1 v-motion-slide-visible-bottom>{{ demo.title || 'Gostou do jogo? Experimente a demo!' }}</h1>
+    <a v-motion-slide-visible-bottom :href="demo.content?.link || 'https://devilmayquake.com/'">
+      {{ demo.content?.label || '>>> devilmayquake.com <<<' }}
+    </a>
   </div>
 </template>
 <style scoped>

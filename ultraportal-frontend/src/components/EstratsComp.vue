@@ -1,18 +1,24 @@
 <script setup>
+import { computed } from 'vue'
 import CompOpcao from '@/components/CompOpcao.vue'
+import { useSiteContent } from '@/composables/useSiteContent'
+
+const { siteContent } = useSiteContent()
+const strategies = computed(() => siteContent.value.strategies || {})
+const items = computed(() => strategies.value.content || [])
 </script>
 
 <template>
   <div class="estrategias container-fluid">
     <a class="anchor2" id="strats"></a>
-    <h1 v-motion-slide-visible-right>Principais Estratégias</h1>
+    <h1 v-motion-slide-visible-right>{{ strategies.title || 'Principais Estratégias' }}</h1>
     <div v-motion-pop-visible class="botoes">
-      <CompOpcao class="moedas sombra" texto="Moedas" />
-      <CompOpcao class="pulo sombra" texto="Movimentação" />
-      <CompOpcao class="probost sombra" texto="Outras" />
-      <!-- <CompOpcao v-motion-pop-visible class="moedas sombra" texto="Moedas" /> -->
-      <!-- <CompOpcao v-motion-pop-visible class="pulo sombra" texto="Movimentação" /> -->
-      <!-- <CompOpcao v-motion-pop-visible class="probost sombra" texto="Outras" /> -->
+      <CompOpcao
+        v-for="item in items"
+        :key="item.title"
+        class="moedas sombra"
+        :texto="item.title"
+      />
     </div>
   </div>
 </template>

@@ -1,5 +1,10 @@
 <script setup>
+import { computed } from 'vue'
 import VideoBackground from 'vue-responsive-video-background-player'
+import { useSiteContent } from '@/composables/useSiteContent'
+
+const { siteContent } = useSiteContent()
+const hero = computed(() => siteContent.value.hero || {})
 </script>
 
 <template>
@@ -9,10 +14,8 @@ import VideoBackground from 'vue-responsive-video-background-player'
     overlay="linear-gradient(0deg,#000000,#80000085)"
     style="max-height: 600px; height: 500vh"
   >
-    <h1 class="dentro">ULTRAPORTAL</h1>
-    <h3 class="dentro">
-      Aprenda a decimar o inferno com e<span style="font-style: italic; color: red">SSS</span>tilo!
-    </h3>
+    <h1 class="dentro">{{ hero.title || 'ULTRAPORTAL' }}</h1>
+    <h3 class="dentro" v-html="hero.subtitle || 'Aprenda a decimar o inferno com estilo!'" />
   </video-background>
 </template>
 <style scoped>
