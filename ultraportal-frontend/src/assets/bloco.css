@@ -1,0 +1,79 @@
+.Opção {
+  color: white;
+
+  width: 350px;
+  min-height: 200px;
+  max-width: 350px;
+  height: 200px;
+  min-height: 200px;
+  max-height: 200px;
+
+  border-radius: 15px;
+  padding: 10px;
+  transition: 0.25s;
+  text-align: center;
+  font-size: 20px;
+
+  display: inline-block;
+  border: none;
+  background: none;
+  cursor: pointer;
+
+  transition: 0.25s;
+  filter: brightness(0.2);
+}
+
+.Opção:hover {
+  filter: brightness(1);
+  transform: scale(1.1) rotate(5deg);
+  font-family: BroshK;
+  font-size: 55px;
+  border: 3px solid black;
+}
+
+.Opção:active {
+  filter: brightness(1.4);
+  transform: scale(0.9) rotate(5deg);
+  font-family: BroshK;
+  font-size: 40px;
+}
+
+#OutrasOpções {
+  width: 80%;
+
+  grid-area: content;
+  display: grid;
+  grid-template-columns: 450px 450px;
+  grid-template-rows: 200px 200px;
+  gap: 5%;
+
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.moedas {
+  background-image: url(../assets/img/moedas.gif);
+  font-family: VCR;
+}
+
+.pulo {
+  background-image: url(../assets/img/pulo.gif);
+  font-family: VCR;
+}
+
+.probost {
+  background-image: url(../assets/img/probost.gif);
+  font-family: VCR;
+}
+
+@media only screen and (max-width: 1111px) {
+  .Opção {
+    width: 300px;
+    min-height: 150px;
+    max-width: 300px;
+    height: 150px;
+    min-height: 150px;
+    max-height: 150px;
+    margin-bottom: 20px;
+  }
+}

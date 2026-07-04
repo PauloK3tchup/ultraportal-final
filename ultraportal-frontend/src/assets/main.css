@@ -1,0 +1,44 @@
+@import './base.css';
+@import './bloco.css';
+
+a#sobre {
+  display: block;
+  position: relative;
+  top: -55px;
+  visibility: hidden;
+}
+
+a#strats {
+  display: block;
+  position: relative;
+  top: -115px;
+  visibility: hidden;
+}
+
+a#speeds {
+  display: block;
+  position: relative;
+  top: -90px;
+  visibility: hidden;
+}
+
+.negrito {
+  font-weight: bolder;
+}
+
+.sombra {
+  text-shadow: 2px 2px 8px #000000;
+}
+
+.italico {
+  font-style: italic;
+}
+
+.ultratexto-mini {
+  font-family: VCR;
+  font-size: 16px;
+}
+
+.vermelho {
+  color: red;
+}
