@@ -13,10 +13,10 @@ O presente documento técnico descreve o reaproveitamento do projeto ULTRAPORTAL
 - **Tipo de ambiente:** Cloud (AWS EC2, via AWS Learner Lab).
 - **Justificativa:** O Learner Lab da AWS foi o ambiente utilizado nas aulas do curso e, portanto, foi escolhido para a realização do projeto. A infraestrutura que ele disponibiliza é perfeitamente apropriada e suficiente para a execução do projeto, além de ser gratuita.
 - **Instâncias criadas:**
-  - 1 instância EC2 t3.micro (Ubuntu 22.04 LTS) "control-plane" que executa o servidor k3s, o ArgoCD e Traefik.
-  - 3 instância EC2 t3.micro (Ubuntu 22.04 LTS) "workers" que executam os nós do cluster k3s.
+  - 1 instância EC2 t3.medium (Ubuntu 22.04 LTS) "control-plane" que executa o servidor k3s, o ArgoCD e Traefik.
+  - 3 instância EC2 t3.medium (Ubuntu 22.04 LTS) "workers" que executam os nós do cluster k3s.
 
-![instâncias](image.png)
+![instancias](image.png)
 
 ## 3. Provisionamento
 
@@ -39,6 +39,7 @@ O presente documento técnico descreve o reaproveitamento do projeto ULTRAPORTAL
 
 - Um dos principais desafios foi ajustar o acesso SSH às instâncias, especialmente o problema de permissões da chave privada. A solução foi restringir o acesso da chave no Windows e apontar corretamente o caminho da chave no inventário do Ansible.
 - Outro desafio foi garantir que as variáveis do Ansible fossem carregadas corretamente pelos playbooks, o que foi resolvido com a inclusão do arquivo de variáveis compartilhadas no playbook de preparação dos servidores.
+- Por estar usando o Windows eu encontrei dificuldades em utilisar o Ansible, minha solução foi criar os scripts localmente mas utilizar eles pela própria instância dentro do AWS, o que me permitiu contornar o problema de compatibilidade do Ansible com o Windows.
 
 ## 4. Cluster Kubernetes
 

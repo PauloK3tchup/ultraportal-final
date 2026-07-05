@@ -3,6 +3,8 @@
     "backend",
     "frontend",
     "relatorio",
-    "infraestrutura"
+    "infraestrutura",
+    "código geral",
+    "docker"
   ]
 }
