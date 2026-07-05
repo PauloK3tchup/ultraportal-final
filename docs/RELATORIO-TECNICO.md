@@ -1,8 +1,7 @@
-# Modelo de Documento Técnico
-
-### Título: Projeto ULTRAPORTAL – Fundamentos de DevOps
+# Projeto ULTRAPORTAL – Fundamentos de DevOps
 
 ### Aluno: Paulo Cesar Nicolau Padilha
+### Turma: BSI 5
 
 ## 1. Introdução
 
