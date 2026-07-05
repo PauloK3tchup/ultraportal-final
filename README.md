@@ -162,7 +162,7 @@ python manage.py test
 
 ## Licença
 
-Adicionar aqui o tipo de licença do projeto (ex.: MIT). Se ainda não definido, considerar adicionar `LICENSE`.
+Este projeto está licenciado sob a [Licença MIT](LICENSE).
 
 ---
 
