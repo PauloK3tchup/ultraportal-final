@@ -1,0 +1,142 @@
+name: ci-cd-ultraportal
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+env:
+  BACKEND_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/ultraportal-backend
+  FRONTEND_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/ultraportal-frontend
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+          cache-dependency-path: ultraportal-backend/requirements.txt
+
+      - name: Install backend dependencies
+        working-directory: ultraportal-backend
+        run: pip install -r requirements.txt
+
+      - name: Run backend tests
+        working-directory: ultraportal-backend
+        run: python manage.py test
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: ultraportal-frontend/package-lock.json
+
+      - name: Install frontend dependencies
+        working-directory: ultraportal-frontend
+        run: npm ci
+
+      - name: Build frontend
+        working-directory: ultraportal-frontend
+        run: npm run build
+
+  build-and-push:
+    needs: test
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    outputs:
+      backend_tag: ${{ steps.meta.outputs.backend_tag }}
+      frontend_tag: ${{ steps.meta.outputs.frontend_tag }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Set metadata
+        id: meta
+        run: |
+          echo "backend_tag=${GITHUB_SHA}" >> "$GITHUB_OUTPUT"
+          echo "frontend_tag=${GITHUB_SHA}" >> "$GITHUB_OUTPUT"
+
+      - name: Build and push backend image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./ultraportal-backend
+          file: ./ultraportal-backend/Dockerfile
+          push: true
+          tags: |
+            ${{ env.BACKEND_IMAGE }}:latest
+            ${{ env.BACKEND_IMAGE }}:${{ steps.meta.outputs.backend_tag }}
+
+      - name: Build and push frontend image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./ultraportal-frontend
+          file: ./ultraportal-frontend/Dockerfile
+          push: true
+          tags: |
+            ${{ env.FRONTEND_IMAGE }}:latest
+            ${{ env.FRONTEND_IMAGE }}:${{ steps.meta.outputs.frontend_tag }}
+
+  update-gitops:
+    needs: build-and-push
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout GitOps repository
+        uses: actions/checkout@v4
+        with:
+          repository: PauloK3tchup/ultraportal-gitops
+          token: ${{ secrets.GITOPS_TOKEN }}
+          path: gitops
+
+      - name: Setup Kustomize
+        uses: imranismail/setup-kustomize@v2
+
+      - name: Update image tags in GitOps manifests
+        shell: bash
+        run: |
+          cd gitops
+          KUSTOMIZATION=""
+
+          if [ -f kustomization.yaml ]; then
+            KUSTOMIZATION="kustomization.yaml"
+          elif [ -f k8s/kustomization.yaml ]; then
+            KUSTOMIZATION="k8s/kustomization.yaml"
+          else
+            KUSTOMIZATION=$(find . -name kustomization.yaml | head -n 1)
+          fi
+
+          if [ -z "$KUSTOMIZATION" ]; then
+            echo "Nenhum kustomization.yaml encontrado no repositório GitOps."
+            exit 1
+          fi
+
+          echo "Atualizando $KUSTOMIZATION"
+          cd "$(dirname "$KUSTOMIZATION")"
+          kustomize edit set image \
+            ${{ env.BACKEND_IMAGE }}=${{ env.BACKEND_IMAGE }}:${{ needs.build-and-push.outputs.backend_tag }} \
+            ${{ env.FRONTEND_IMAGE }}=${{ env.FRONTEND_IMAGE }}:${{ needs.build-and-push.outputs.frontend_tag }}
+
+      - name: Commit and push changes
+        working-directory: gitops
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add .
+          git commit -m "chore: update ultraportal images to ${{ needs.build-and-push.outputs.backend_tag }}" || echo "No changes to commit"
+          git push
