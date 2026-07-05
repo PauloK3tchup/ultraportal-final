@@ -9,6 +9,7 @@ _Essa documentação foi gerada por inteligência artificial._
 - Backend: [ultraportal-backend](ultraportal-backend) — API e painel admin (Django).
 - Frontend: [ultraportal-frontend](ultraportal-frontend) — SPA em Vue 3 + Vite.
 - Infra & deployment: arquivos de Docker, `docker-compose.yml`, `infra/ansible` e `infra/terraform`.
+- Relatório Técnico: [RELATORIO-TECNICO.md](docs/RELATORIO-TECNICO.md).
 
 ## Estrutura relevante
 
