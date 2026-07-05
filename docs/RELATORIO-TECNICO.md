@@ -14,7 +14,7 @@ O presente documento técnico descreve o reaproveitamento do projeto ULTRAPORTAL
 - **Justificativa:** O Learner Lab da AWS foi o ambiente utilizado nas aulas do curso e, portanto, foi escolhido para a realização do projeto. A infraestrutura que ele disponibiliza é perfeitamente apropriada e suficiente para a execução do projeto, além de ser gratuita.
 - **Instâncias criadas:**
   - 1 instância EC2 t3.medium (Ubuntu 22.04 LTS) "control-plane" que executa o servidor k3s e o ArgoCD.
-  - 3 instância EC2 t3.medium (Ubuntu 22.04 LTS) "workers" que executam os nós do cluster k3s.
+  - 3 instâncias EC2 t3.medium (Ubuntu 22.04 LTS) "workers" que executam os nós do cluster k3s.
 
 ![instancias](image.png)
 
