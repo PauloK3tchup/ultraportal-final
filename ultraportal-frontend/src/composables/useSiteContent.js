@@ -1,6 +1,20 @@
 import { onMounted, ref } from 'vue'
 
-const API_BASE_URL = (import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000').replace(/\/$/, '')
+const getDefaultApiBaseUrl = () => {
+  if (typeof window === 'undefined') {
+    return 'http://127.0.0.1:8000'
+  }
+
+  const hostname = window.location.hostname
+
+  if (!hostname || hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '0.0.0.0') {
+    return 'http://127.0.0.1:8000'
+  }
+
+  return `http://${hostname}:30080`
+}
+
+const API_BASE_URL = (import.meta.env.VITE_API_URL || getDefaultApiBaseUrl()).replace(/\/$/, '')
 
 export function useSiteContent() {
   const siteContent = ref({})
