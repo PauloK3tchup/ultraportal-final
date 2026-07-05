@@ -13,7 +13,7 @@ O presente documento técnico descreve o reaproveitamento do projeto ULTRAPORTAL
 - **Tipo de ambiente:** Cloud (AWS EC2, via AWS Learner Lab).
 - **Justificativa:** O Learner Lab da AWS foi o ambiente utilizado nas aulas do curso e, portanto, foi escolhido para a realização do projeto. A infraestrutura que ele disponibiliza é perfeitamente apropriada e suficiente para a execução do projeto, além de ser gratuita.
 - **Instâncias criadas:**
-  - 1 instância EC2 t3.medium (Ubuntu 22.04 LTS) "control-plane" que executa o servidor k3s, o ArgoCD e Traefik.
+  - 1 instância EC2 t3.medium (Ubuntu 22.04 LTS) "control-plane" que executa o servidor k3s e o ArgoCD.
   - 3 instância EC2 t3.medium (Ubuntu 22.04 LTS) "workers" que executam os nós do cluster k3s.
 
 ![instancias](image.png)
@@ -46,29 +46,51 @@ O presente documento técnico descreve o reaproveitamento do projeto ULTRAPORTAL
 - A ferramenta utilizada foi o **k3s**, uma distribuição leve do Kubernetes, que foi instalada no nó "control-plane" e nos nós "workers".
 
 ```
-    NAME              STATUS   ROLES           AGE   VERSION
-    ip-172-31-85-66   Ready    control-plane   63m   v1.36.2+k3s1
-    ip-172-31-81-141  Ready    <none>          63m   v1.36.2+k3s1
-    ip-172-31-89-137  Ready    <none>          63m   v1.36.2+k3s1
-    ip-172-31-80-253  Ready    <none>          63m   v1.36.2+k3s1
+NAME              STATUS   ROLES           AGE   VERSION
+ip-172-31-85-66   Ready    control-plane   63m   v1.36.2+k3s1
+ip-172-31-81-141  Ready    <none>          63m   v1.36.2+k3s1
+ip-172-31-89-137  Ready    <none>          63m   v1.36.2+k3s1
+ip-172-31-80-253  Ready    <none>          63m   v1.36.2+k3s1
 ```
 
 ## 5. GitOps com ArgoCD
 
-Instalação do ArgoCD
-Configuração do repositório Git
-Deploy da aplicação
-Screenshots do ArgoCD funcionando
+O ArgoCD foi instalado manualmente na máquina control-panel, mas a configuração foi feita por um arquivo yaml disponibilizado no repositório gitops.
+
+Esse arquivo foi aplicado pelo kubectl na máquina control-panel e foi responsável pelo deploy das aplicações no sistema e nas portas necessárias.
+
+Um problema encontrado durante o desenvolvimento foi a disponibilidade das portas, eu estava tentando acessar as páginas sem liberar as portas da aplicação ou do ArgoCD no grupo de segurança, o que foi um grande deslize meu durante a produção desse trabalho.
+
+Mas, no final, o deploy foi um sucesso! A aplicação roda independentemente na porta sem necessidade de um port-forward, embora o ArgoCD precise.
+
+![argocd](image-1.png)
 
 ## 6. Aplicação
 
-Descrição da aplicação (ex: FastAPI, banco de dados, etc.)
-Como acessar a aplicação no cluster
+Como foi mencionado antes, essa aplicação é uma simples página estática, ela serve para mostrar informações de um jogo popular chamado "ULTRAKILL" como uma maneira de introduzir o jogo e ajudar jogadores iniciantes, embora a página seja apenas um teste e não possua muitos detalhes específicos sobre o jogo.
+
+O frontend da aplicação foi desenvolvido com o VueJs, enquanto os dados exibidos na tela são providenciados por um banco de dados Django em backend.
+
+O acesso á página frontend é feito pelo endereço do control-panel na porta "30081"
+
+![alt text](image-2.png)
+
+Enquanto o backend é acessado pelo endereço na porta "30080"
+
+![alt text](image-3.png)
 
 ## 7. Conclusão
 
-Lições aprendidas
-Dificuldades encontradas
-O que faria diferente
+Muito foi aprendido durante a confecção desse trabalho, principalmente o deploy em si, algo que eu tinha dificuldade em específico.
+
+Minhas maiores dificuldades foram frutos de deslizes meus ou de complicações por causa do sistema operacional que utilizo no meu computador pessoal, mas creio que todas foram superadas no final.
+
+Se eu fosse fazer esse trabalho novamente, eu certamente tentaria automatizar algumas outras coisas nesse processo, sinto que fiz muitas coisas de modo desnecessariamente manual e, consequentemente,acabei perdendo muito tempo e esforço no processo.
+
+No final, creio que tudo tenha dado certo, embora dificuldades tenha aparecido no caminho, eu fiquei satisfeito com os resultados.
 
 ## 8. Link para Repositório
+
+[Repositório da aplicação, infraestrutura e relatório](https://github.com/PauloK3tchup/ultraportal-final.git)
+
+[Repositório GitOps](https://github.com/PauloK3tchup/ultraportal-gitops.git)
