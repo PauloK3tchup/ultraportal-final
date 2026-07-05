@@ -43,9 +43,15 @@ O presente documento técnico descreve o reaproveitamento do projeto ULTRAPORTAL
 
 ## 4. Cluster Kubernetes
 
-Ferramenta usada para instalar o cluster
-Configuração dos nós
-Testes de funcionamento
+- A ferramenta utilizada foi o **k3s**, uma distribuição leve do Kubernetes, que foi instalada no nó "control-plane" e nos nós "workers".
+
+```
+    NAME              STATUS   ROLES           AGE   VERSION
+    ip-172-31-85-66   Ready    control-plane   63m   v1.36.2+k3s1
+    ip-172-31-81-141  Ready    <none>          63m   v1.36.2+k3s1
+    ip-172-31-89-137  Ready    <none>          63m   v1.36.2+k3s1
+    ip-172-31-80-253  Ready    <none>          63m   v1.36.2+k3s1
+```
 
 ## 5. GitOps com ArgoCD
 
