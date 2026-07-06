@@ -1,7 +1,23 @@
 import { onMounted, ref } from 'vue'
 
 const getDefaultApiBaseUrl = () => {
-  return `http://44.210.145.2:30080`
+  if (typeof window === 'undefined') {
+    return 'http://127.0.0.1:8000'
+  }
+
+  const hostname = window.location.hostname
+  const port = window.location.port
+
+  // Em ambiente local ou localhost, usa porta 8000
+  if (!hostname || hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '0.0.0.0') {
+    return 'http://127.0.0.1:8000'
+  }
+
+  // Em ambiente de produção (AWS), usa a porta configurada ou tenta automaticamente
+  // Por padrão, tenta a mesma porta 30080
+  const apiPort = import.meta.env.VITE_API_PORT || '30080'
+  const protocol = window.location.protocol === 'https:' ? 'https' : 'http'
+  return `${protocol}://${hostname}:${apiPort}`
 }
 
 const API_BASE_URL = (import.meta.env.VITE_API_URL || getDefaultApiBaseUrl()).replace(/\/$/, '')

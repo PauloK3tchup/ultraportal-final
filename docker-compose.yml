@@ -6,6 +6,7 @@ services:
     command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     ports:
       - "8000:8000"
+      - "30080:8000" # Porta alternativa para acesso externo (AWS)
     volumes:
       - ./ultraportal-backend:/app
     environment:
@@ -24,3 +25,7 @@ services:
       - /app/node_modules
     environment:
       CHOKIDAR_USEPOLLING: "true"
+      # Configure a URL da API - deixe em branco para usar padrão
+      # ou defina como http://seu-dominio-aws:30080
+      VITE_API_URL: ${VITE_API_URL:-}
+      VITE_API_PORT: ${VITE_API_PORT:-30080}
