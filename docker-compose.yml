@@ -30,5 +30,10 @@ services:
       # Em produção AWS: http://seu-ip-ec2:30080
       VITE_API_URL: ${VITE_API_URL:-http://backend:8000}
       VITE_API_PORT: ${VITE_API_PORT:-8000}
+      # HMR (websocket) — configure para o IP/porta pública quando expor o frontend
+      # Exemplo na EC2: VITE_HMR_HOST=SEU_IP_EC2 VITE_HMR_CLIENT_PORT=30081
+      VITE_HMR_HOST: ${VITE_HMR_HOST:-}
+      VITE_HMR_CLIENT_PORT: ${VITE_HMR_CLIENT_PORT:-5173}
+      VITE_HMR_PROTOCOL: ${VITE_HMR_PROTOCOL:-}
     depends_on:
       - backend
