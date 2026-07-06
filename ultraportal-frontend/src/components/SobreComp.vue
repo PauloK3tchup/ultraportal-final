@@ -11,7 +11,7 @@ const about = computed(() => siteContent.value.about || {})
   <div class="container-fluid">
     <div v-motion-slide-visible-left class="artigo">
       <img class="esquerda" src="../assets/img/Ultrakill_cover.png" alt="" />
-      <p>{{ about.description || 'ULTRAKILL é um jogo de ação FPS...' }}</p>
+      <p>{{ about.description || 'ULTRAKILL é um jogo de ação FPS... (Mais informações)' }}</p>
     </div>
     <div v-motion-slide-visible-right class="foto">
       <img class="direita" src="../assets/img/tenebre-rosso-sangue-capa.jpg" alt="" />

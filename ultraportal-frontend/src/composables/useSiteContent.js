@@ -2,13 +2,13 @@ import { onMounted, ref } from 'vue'
 
 const getDefaultApiBaseUrl = () => {
   if (typeof window === 'undefined') {
-    return 'http://127.0.0.1:8000'
+    return 'http://127.0.0.1:30080'
   }
 
   const hostname = window.location.hostname
 
   if (!hostname || hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '0.0.0.0') {
-    return 'http://127.0.0.1:8000'
+    return 'http://127.0.0.1:30080'
   }
 
   return `http://${hostname}:30080`
