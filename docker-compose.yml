@@ -25,7 +25,10 @@ services:
       - /app/node_modules
     environment:
       CHOKIDAR_USEPOLLING: "true"
-      # Configure a URL da API - deixe em branco para usar padrão
-      # ou defina como http://seu-dominio-aws:30080
-      VITE_API_URL: ${VITE_API_URL:-}
-      VITE_API_PORT: ${VITE_API_PORT:-30080}
+      # Configure a URL completa da API do backend
+      # Em desenvolvimento local: http://backend:8000 (nome do serviço no docker)
+      # Em produção AWS: http://seu-ip-ec2:30080
+      VITE_API_URL: ${VITE_API_URL:-http://backend:8000}
+      VITE_API_PORT: ${VITE_API_PORT:-8000}
+    depends_on:
+      - backend

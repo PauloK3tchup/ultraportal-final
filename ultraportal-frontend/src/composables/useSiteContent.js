@@ -1,6 +1,12 @@
 import { onMounted, ref } from 'vue'
 
 const getDefaultApiBaseUrl = () => {
+  // Primeiro, verificamos se temos uma URL completa configurada
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL.replace(/\/$/, '')
+  }
+
+  // Em ambiente server-side (SSR), retorna padrão local
   if (typeof window === 'undefined') {
     return 'http://127.0.0.1:8000'
   }
@@ -13,14 +19,13 @@ const getDefaultApiBaseUrl = () => {
     return 'http://127.0.0.1:8000'
   }
 
-  // Em ambiente de produção (AWS), usa a porta configurada ou tenta automaticamente
-  // Por padrão, tenta a mesma porta 30080
+  // Em ambiente de produção (AWS), tenta usar a interface http
+  // Se VITE_API_URL não estiver definida, usa a porta do backend (padrão 30080)
   const apiPort = import.meta.env.VITE_API_PORT || '30080'
-  const protocol = window.location.protocol === 'https:' ? 'https' : 'http'
-  return `${protocol}://${hostname}:${apiPort}`
+  return `http://${hostname}:${apiPort}`
 }
 
-const API_BASE_URL = (import.meta.env.VITE_API_URL || getDefaultApiBaseUrl()).replace(/\/$/, '')
+const API_BASE_URL = getDefaultApiBaseUrl()
 
 export function useSiteContent() {
   const siteContent = ref({})
