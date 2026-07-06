@@ -6,26 +6,13 @@ const getDefaultApiBaseUrl = () => {
     return import.meta.env.VITE_API_URL.replace(/\/$/, '')
   }
 
-  // Segundo: Em ambiente browser
+  // Se estamos no browser, use o hostname atual e force a porta 30080
   if (typeof window !== 'undefined') {
-    const hostname = window.location.hostname
-    const port = window.location.port
-
-    // Localhost ou desenvolvimento
-    if (
-      !hostname ||
-      hostname === 'localhost' ||
-      hostname === '127.0.0.1' ||
-      hostname === '0.0.0.0'
-    ) {
-      return 'http://localhost:8000'
-    }
-
-    // Em produção (AWS), tenta usar a porta 30080
+    const hostname = window.location.hostname || 'localhost'
     return `http://${hostname}:30080`
   }
 
-  // Fallback final
+  // Fallback final (server-side)
   return 'http://localhost:8000'
 }
 
